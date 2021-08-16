@@ -105,6 +105,7 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 # Crypto
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
+TW_USE_FSCRYPT_POLICY := 1
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
