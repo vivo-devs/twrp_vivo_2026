@@ -4,6 +4,13 @@
 /cache           ext4      /dev/block/platform/bootdevice/by-name/cache
 /dtbo            emmc      /dev/block/platform/bootdevice/by-name/dtbo        flags=backup
 /vbmeta          emmc      /dev/block/platform/bootdevice/by-name/vbmeta      flags=backup;flashimg
+/persist         ext4      /dev/block/platform/bootdevice/by-name/persist
+/metadata        ext4      /dev/block/platform/bootdevice/by-name/metadata      flags=display="Metadata"
+/data            ext4      /dev/block/platform/bootdevice/by-name/userdata      fileencryption=aes-256-xts:aes-256-cts:v1
+
+# vivo partition
+/vgc             ext4       /dev/block/platform/bootdevice/by-name/vgc        flags=display="VGC"
+/oem		     ext4	    /dev/block/platform/bootdevice/by-name/cust	      flags=display="Cust"
 
 # IMEI and modem related
 # below four partitions are ext4, but we are using only for backup so emmc
