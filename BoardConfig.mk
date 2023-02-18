@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/realme/RMX2185
+DEVICE_PATH := device/vivo/2026
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
@@ -152,7 +152,6 @@ TW_DEFAULT_BRIGHTNESS := 1200
 TW_NO_SCREEN_BLANK := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TARGET_USES_MKE2FS := true
-TW_OZIP_DECRYPT_KEY := 0000
 
 # resetprop and magiskboot
 TW_INCLUDE_RESETPROP := true
