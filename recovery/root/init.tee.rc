@@ -34,6 +34,10 @@ on post-fs
     # Create mcRegistry to store failure record
     mkdir /mnt/vendor/persist/mcRegistry 0771 system system
 
+    # Starts mobicore
+    write /proc/bootprof "MOBICORE: Starting mcDriverDaemon"
+    start mobicore
+
 on post-fs-data
     # Create /data/vendor/key_provisioning dir and get proper encryption policy installed
     # Key Installation
