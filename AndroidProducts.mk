@@ -8,6 +8,4 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_2026.mk
 
 COMMON_LUNCH_CHOICES := \
-    twrp_2026-user \
-    twrp_2026-userdebug \
     twrp_2026-eng
