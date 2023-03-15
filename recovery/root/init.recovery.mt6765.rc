@@ -1,18 +1,61 @@
 import /init.tee.rc
 
 on init
-    setprop sys.usb.configfs 1
-    setprop sys.usb.ffs.aio_compat 1
+    mkdir /mnt/vendor/persist
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist rw
 
-on fs && property:ro.debuggable=0
-    # distinguish USB shoulde connect or not, i.e. CDP vs SDP
-    # write /sys/class/udc/musb-hdrc/device/cmode 2
-    # set charging free due to it wait for USB activation
-    start adbd
+on fs
+    install_keyring
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    setprop crypto.ready 1
 
-on post-fs
-    # Support A/B feature for emmc boot region
-    symlink /dev/block/sda /dev/block/mmcblk0boot0
-    symlink /dev/block/sdb /dev/block/mmcblk0boot1
-    symlink /dev/block/mmcblk0boot0 /dev/block/platform/bootdevice/by-name/preloader_a
-    symlink /dev/block/mmcblk0boot1 /dev/block/platform/bootdevice/by-name/preloader_b
+service keystore_auth /system/bin/keystore_auth
+    oneshot
+    user system
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /system/bin/keystore /tmp/misc/keystore
+    user root
+    group root drmrpc readproc log
+    writepid /dev/cpuset/foreground/tasks
+    disabled
+    seclabel u:r:recovery:s0
+
+service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.trustonic
+    user root
+    group root drmrpc
+    disabled
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:hwservicemanager.ready=true
+    start keymaster-4-0
+    start gatekeeper-1-0
+
+on property:ro.crypto.state=unsupported
+    stop mobicore
+    stop keymaster-4-0
+    stop gatekeeper-1-0
+    stop servicemanager
+    stop hwservicemanager
+
+on property:ro.crypto.state=unencrypted
+    stop mobicore
+    stop keymaster-4-0
+    stop gatekeeper-1-0
+    stop servicemanager
+    stop hwservicemanager
+
+on property:twrp.decrypt.done=true
+    stop mobicore
+    stop keymaster-4-0
+    stop gatekeeper-1-0
+    stop servicemanager
+    stop hwservicemanager
