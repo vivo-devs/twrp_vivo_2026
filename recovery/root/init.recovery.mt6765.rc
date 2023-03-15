@@ -1,3 +1,4 @@
+import /init.recovery.touch.rc
 import /init.tee.rc
 
 on init
