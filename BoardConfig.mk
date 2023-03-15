@@ -127,6 +127,10 @@ TW_SCREEN_BLANK_ON_BOOT := true
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 
+# Resetprop and Magiskboot
+TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_REPACKTOOLS := true
+
 # Statusbar icons flags
 TW_STATUS_ICONS_ALIGN := center
 TW_CUSTOM_CPU_POS := 50
